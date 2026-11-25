@@ -1,0 +1,80 @@
+---
+import Section from './Section.astro';
+---
+
+<Section name="newsletter" padding="small">
+  <div class="newsletter_component" data-reveal>
+    <div class="newsletter_text">
+      <h2 class="heading-style-h3">New roasts, every other Monday.</h2>
+      <p class="text-style-muted">Get first dibs on limited beans and a free pastry on your birthday.</p>
+    </div>
+    <form class="newsletter_form" action="#" method="post">
+      <label for="newsletter-email" class="visually-hidden">Email address</label>
+      <input id="newsletter-email" type="email" name="email" placeholder="you@email.com" required class="newsletter_input" />
+      <button type="submit" class="button is-accent">Subscribe</button>
+    </form>
+  </div>
+</Section>
+
+<script>
+  // Demo only: no backend yet. Replace with your form provider (Netlify Forms, Formspree, etc.).
+  document.querySelectorAll<HTMLFormElement>('.newsletter_form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.innerHTML = '<p class="newsletter_thanks">Salamat! You’re on the list. ☕</p>';
+    });
+  });
+</script>
+
+<style>
+  .newsletter_component {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 4rem;
+    padding: 3rem;
+    border-radius: var(--radius-large);
+    background-color: var(--color-espresso);
+    color: var(--color-cream);
+  }
+  .newsletter_text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .newsletter_text .text-style-muted {
+    color: var(--color-latte);
+  }
+  .newsletter_form {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .newsletter_input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.95rem 1.25rem;
+    border: 1px solid rgb(247 240 230 / 0.2);
+    border-radius: 999px;
+    background-color: rgb(247 240 230 / 0.08);
+    color: var(--color-cream);
+    font: inherit;
+  }
+  .newsletter_input::placeholder {
+    color: var(--color-latte);
+  }
+  .newsletter_form :global(.newsletter_thanks) {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-gold);
+  }
+  @media (max-width: 767px) {
+    .newsletter_component {
+      grid-template-columns: 1fr;
+      padding: 2rem 1.5rem;
+    }
+    .newsletter_form {
+      flex-direction: column;
+    }
+  }
+</style>

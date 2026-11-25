@@ -1,0 +1,78 @@
+---
+import Section from './Section.astro';
+
+const stats = [
+  { value: '3', label: 'Partner farms' },
+  { value: '48h', label: 'Roast to cup' },
+  { value: '100%', label: 'Philippine beans' },
+];
+---
+
+<Section name="story" id="story" theme="alternate">
+  <div class="story_component">
+    <div class="story_heading" data-reveal>
+      <p class="text-style-tagline">Our story</p>
+      <div class="spacer-small"></div>
+      <h2 class="heading-style-h2">
+        Tala means <em>star</em>. We named it after the early mornings when the farmers start picking.
+      </h2>
+    </div>
+    <div class="story_body" data-reveal style="--reveal-delay: 0.1s">
+      <p class="text-size-medium text-style-muted">
+        Tala started as a weekend cart at the Maginhawa food park. Today we're a small café with a big roaster in the back,
+        working directly with growers in Benguet, Sagada, and Batangas.
+      </p>
+      <p class="text-size-medium text-style-muted">
+        We pay above fair-trade prices, roast every Monday and Thursday, and never sell a bag that's more than three weeks old.
+      </p>
+      <dl class="story_stats">
+        {stats.map((s) => (
+          <div class="story_stat">
+            <dt class="text-size-small text-style-muted">{s.label}</dt>
+            <dd class="heading-style-h3">{s.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .story_component {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: end;
+  }
+  .story_heading em {
+    color: var(--color-gold);
+  }
+  .story_body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .story_stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color-primary);
+  }
+  .story_stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+  }
+  .story_stat dd {
+    margin: 0;
+    color: var(--color-gold);
+  }
+  @media (max-width: 991px) {
+    .story_component {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

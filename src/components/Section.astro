@@ -1,0 +1,22 @@
+---
+// Client-First section wrapper: section_[name] > padding-global > container > padding-section
+interface Props {
+  name: string;
+  container?: 'small' | 'medium' | 'large';
+  padding?: 'small' | 'medium' | 'large';
+  theme?: 'primary' | 'secondary' | 'alternate';
+  id?: string;
+}
+
+const { name, container = 'large', padding = 'large', theme = 'primary', id } = Astro.props;
+---
+
+<section class:list={[`section_${name}`, theme !== 'primary' && `background-color-${theme}`]} id={id}>
+  <div class="padding-global">
+    <div class={`container-${container}`}>
+      <div class={`padding-section-${padding}`}>
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

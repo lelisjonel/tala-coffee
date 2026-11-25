@@ -1,0 +1,109 @@
+---
+import Section from './Section.astro';
+import Cup from './Cup.astro';
+import { featured } from '../data/site';
+
+const backgrounds = ['#e7c9a9', '#d4b48f', '#d9c8e4'];
+---
+
+<Section name="featured">
+  <div class="featured_component">
+    <div class="featured_header" data-reveal>
+      <div>
+        <p class="text-style-tagline">Customer favorites</p>
+        <div class="spacer-small"></div>
+        <h2 class="heading-style-h2">What everyone's ordering</h2>
+      </div>
+      <a href="/menu" class="button is-secondary">Full menu →</a>
+    </div>
+
+    <ul class="featured_list">
+      {featured.map((drink, i) => (
+        <li class="featured_card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
+          <div class="featured_visual" style={`background-color: ${backgrounds[i % backgrounds.length]}`}>
+            {drink.tag && <span class="featured_tag text-size-small">{drink.tag}</span>}
+            <Cup liquid={drink.liquid} foam={drink.foam} iced={drink.name.includes('Cold')} steam={!drink.name.includes('Cold')} class="featured_cup" />
+          </div>
+          <div class="featured_info">
+            <div class="featured_title-row">
+              <h3 class="heading-style-h3">{drink.name}</h3>
+              <p class="featured_price">₱{drink.price}</p>
+            </div>
+            <p class="text-style-muted">{drink.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .featured_component {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+  .featured_header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+  }
+  .featured_list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .featured_card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .featured_visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-large);
+    overflow: hidden;
+  }
+  .featured_visual :global(.featured_cup) {
+    width: 70%;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .featured_card:hover :global(.featured_cup) {
+    transform: translateY(-6px) rotate(-3deg);
+  }
+  .featured_tag {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background-color: var(--color-cream);
+    font-weight: 500;
+  }
+  .featured_info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .featured_title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .featured_price {
+    font-weight: 600;
+    color: var(--color-caramel);
+    white-space: nowrap;
+  }
+  @media (max-width: 991px) {
+    .featured_list {
+      grid-template-columns: 1fr;
+      max-width: 28rem;
+    }
+  }
+</style>

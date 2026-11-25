@@ -1,0 +1,93 @@
+---
+import Section from './Section.astro';
+import { origins } from '../data/site';
+---
+
+<Section name="beans" id="beans" theme="secondary">
+  <div class="beans_component">
+    <div class="beans_header" data-reveal>
+      <p class="text-style-tagline">From the farm</p>
+      <div class="spacer-small"></div>
+      <h2 class="heading-style-h2">Three regions. One cup.</h2>
+      <div class="spacer-small"></div>
+      <p class="text-size-medium text-style-muted">
+        Every bean we serve is grown in the Philippines. We visit each farm at least once a harvest.
+      </p>
+    </div>
+
+    <ol class="beans_list">
+      {origins.map((o, i) => (
+        <li class="beans_item" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
+          <span class="beans_index">0{i + 1}</span>
+          <div class="beans_main">
+            <h3 class="heading-style-h3">{o.region}</h3>
+            <p class="text-style-muted">{o.bean}</p>
+          </div>
+          <p class="beans_notes">{o.notes}</p>
+          <p class="beans_altitude text-size-small text-style-muted">{o.altitude} above sea level</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="beans_cta" data-reveal>
+      <p class="text-size-medium">Take a bag home. 250g bags from <strong>₱450</strong>, ground to order.</p>
+      <a href="/menu" class="button">Shop beans in-store</a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .beans_component {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+  .beans_header {
+    max-width: 40rem;
+  }
+  .beans_list {
+    border-top: 1px solid var(--border-color-primary);
+  }
+  .beans_item {
+    display: grid;
+    grid-template-columns: 4rem 1.2fr 1.5fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-color-primary);
+  }
+  .beans_index {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-caramel);
+  }
+  .beans_notes {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-style: italic;
+  }
+  .beans_altitude {
+    text-align: right;
+  }
+  .beans_cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 2.5rem;
+    border-radius: var(--radius-large);
+    background-color: var(--color-cream);
+  }
+  @media (max-width: 991px) {
+    .beans_item {
+      grid-template-columns: 3rem 1fr;
+      gap: 0.5rem 1rem;
+    }
+    .beans_notes,
+    .beans_altitude {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>

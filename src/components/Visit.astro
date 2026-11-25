@@ -1,0 +1,159 @@
+---
+import Section from './Section.astro';
+import { site } from '../data/site';
+---
+
+<Section name="visit" id="visit" padding="medium">
+  <div class="visit_component">
+    <div class="visit_info" data-reveal>
+      <p class="text-style-tagline">Visit us</p>
+      <div class="spacer-small"></div>
+      <h2 class="heading-style-h2">Pull up a chair.</h2>
+      <div class="spacer-medium"></div>
+
+      <div class="visit_grid">
+        <div>
+          <p class="heading-style-h4">Address</p>
+          <div class="spacer-xsmall"></div>
+          {site.address.map((line) => <p class="text-style-muted">{line}</p>)}
+          <div class="spacer-small"></div>
+          <a href={site.mapUrl} class="visit_link" target="_blank" rel="noopener">Get directions ↗</a>
+        </div>
+        <div>
+          <p class="heading-style-h4">Hours</p>
+          <div class="spacer-xsmall"></div>
+          <dl class="visit_hours">
+            {site.hours.map((h) => (
+              <div class="visit_hours-row">
+                <dt>{h.days}</dt>
+                <dd class="text-style-muted">{h.time}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <div class="spacer-medium"></div>
+      <ul class="visit_perks">
+        <li>☕ Free Wi-Fi & outlets</li>
+        <li>🐾 Pet-friendly patio</li>
+        <li>🚲 Bike rack out front</li>
+      </ul>
+    </div>
+
+    <a href={site.mapUrl} class="visit_map" target="_blank" rel="noopener" aria-label="Open map to Tala Coffee" data-reveal>
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <rect width="400" height="400" fill="#e6d6bf" />
+        <g stroke="#f7f0e6" stroke-width="18" fill="none">
+          <path d="M-20 140 L420 110" />
+          <path d="M-20 290 L420 320" />
+          <path d="M120 -20 L150 420" />
+          <path d="M290 -20 L270 420" />
+        </g>
+        <g stroke="#f7f0e6" stroke-width="6" fill="none" opacity="0.7">
+          <path d="M-20 215 L420 215" />
+          <path d="M210 -20 L210 420" />
+        </g>
+        <rect x="160" y="150" width="90" height="60" rx="8" fill="#cfe0b8" />
+        <rect x="20" y="20" width="80" height="70" rx="8" fill="#d9c7ad" />
+        <rect x="310" y="340" width="70" height="50" rx="8" fill="#d9c7ad" />
+        <text x="205" y="186" font-family="Inter, sans-serif" font-size="11" fill="#5e7444" text-anchor="middle">Park</text>
+        <text x="40" y="104" font-family="Inter, sans-serif" font-size="11" fill="#7a5a48" transform="rotate(-4 40 104)">Maginhawa St.</text>
+        <g transform="translate(230 250)">
+          <circle r="34" fill="#c8823e" opacity="0.2" class="visit_pulse" />
+          <path d="M0 14 C-14 -2 -18 -8 -18 -16 a18 18 0 0 1 36 0 c0 8 -4 14 -18 30z" fill="#2b1d16" transform="translate(0 -14)" />
+          <circle cy="-30" r="6" fill="#e9b872" />
+        </g>
+      </svg>
+      <span class="visit_map-label">Tala Coffee</span>
+    </a>
+  </div>
+</Section>
+
+<style>
+  .visit_component {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .visit_grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+  }
+  .visit_link {
+    font-weight: 500;
+    color: var(--color-caramel);
+  }
+  .visit_hours {
+    margin: 0;
+  }
+  .visit_hours-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--border-color-primary);
+  }
+  .visit_hours-row dd {
+    margin: 0;
+  }
+  .visit_perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .visit_perks li {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border-color-primary);
+    border-radius: 999px;
+    font-size: 0.875rem;
+  }
+  .visit_map {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    border-radius: var(--radius-large);
+    overflow: hidden;
+  }
+  .visit_map svg {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s var(--ease-out);
+  }
+  .visit_map:hover svg {
+    transform: scale(1.03);
+  }
+  .visit_map-label {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background-color: var(--color-espresso);
+    color: var(--color-cream);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .visit_pulse {
+    animation: pulse 2.4s ease-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.4); opacity: 0.5; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @media (max-width: 991px) {
+    .visit_component {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+  @media (max-width: 479px) {
+    .visit_grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

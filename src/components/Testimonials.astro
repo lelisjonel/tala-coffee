@@ -1,0 +1,63 @@
+---
+import Section from './Section.astro';
+import { testimonials } from '../data/site';
+---
+
+<Section name="testimonials">
+  <div class="testimonials_component">
+    <div class="text-align-center" data-reveal>
+      <p class="text-style-tagline">Kind words</p>
+      <div class="spacer-small"></div>
+      <h2 class="heading-style-h2">Regulars say it best</h2>
+    </div>
+    <ul class="testimonials_list">
+      {testimonials.map((t, i) => (
+        <li class="testimonials_card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
+          <div class="testimonials_stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <blockquote class="testimonials_quote">“{t.quote}”</blockquote>
+          <p class="text-size-small">
+            <strong>{t.author}</strong> <span class="text-style-muted">· {t.source}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+    <p class="text-size-small text-style-muted text-align-center">Sample reviews for this demo site.</p>
+  </div>
+</Section>
+
+<style>
+  .testimonials_component {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+  .testimonials_list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .testimonials_card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2rem;
+    border: 1px solid var(--border-color-primary);
+    border-radius: var(--radius-large);
+    background-color: var(--color-white);
+  }
+  .testimonials_stars {
+    color: var(--color-caramel);
+    letter-spacing: 0.15em;
+  }
+  .testimonials_quote {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  @media (max-width: 991px) {
+    .testimonials_list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

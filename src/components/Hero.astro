@@ -1,0 +1,101 @@
+---
+import Cup from './Cup.astro';
+import { site } from '../data/site';
+---
+
+<section class="section_hero">
+  <div class="padding-global">
+    <div class="container-large">
+      <div class="padding-section-medium">
+        <div class="hero_component">
+          <div class="hero_content">
+            <p class="text-style-tagline" data-reveal>Neighborhood café · Est. 2021</p>
+            <div class="spacer-small"></div>
+            <h1 class="heading-style-h1" data-reveal style="--reveal-delay: 0.1s">
+              Slow coffee for <em class="text-color-accent">busy</em> mornings.
+            </h1>
+            <div class="spacer-medium"></div>
+            <p class="text-size-large text-style-muted hero_text" data-reveal style="--reveal-delay: 0.2s">
+              Small-batch Philippine beans, roasted down the street and poured with care. Come for the barako, stay for the ensaymada.
+            </p>
+            <div class="spacer-large"></div>
+            <div class="button-group" data-reveal style="--reveal-delay: 0.3s">
+              <a href="/menu" class="button">See the menu</a>
+              <a href="#visit" class="button is-secondary">Plan a visit</a>
+            </div>
+          </div>
+
+          <div class="hero_visual" data-reveal style="--reveal-delay: 0.15s">
+            <div class="hero_circle"></div>
+            <Cup liquid="#8a5a3b" foam="#f1dfc7" steam class="hero_cup" />
+            <div class="hero_badge">
+              <span class="hero_badge-number">{site.hours[0].time.split(' – ')[0]}</span>
+              <span class="text-size-small">Open daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero_component {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: min(44rem, calc(100svh - 4.5rem));
+  }
+  .hero_text {
+    max-width: 32rem;
+  }
+  .hero_visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+  }
+  .hero_circle {
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgb(233 184 114 / 0.55), transparent 60%),
+      var(--color-latte);
+  }
+  .hero_visual :global(.hero_cup) {
+    position: relative;
+    width: 72%;
+  }
+  .hero_badge {
+    position: absolute;
+    right: 4%;
+    bottom: 12%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-medium);
+    background-color: var(--color-espresso);
+    color: var(--color-cream);
+    box-shadow: 0 18px 40px rgb(43 29 22 / 0.2);
+    transform: rotate(4deg);
+  }
+  .hero_badge-number {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+  }
+  @media (max-width: 991px) {
+    .hero_component {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      min-height: 0;
+    }
+    .hero_visual {
+      max-width: 26rem;
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { menu } from '../data/site';
+
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+---
+
+<Layout title="Menu" description="Espresso, slow bar, non-coffee drinks, and pastries baked daily at Tala Coffee.">
+  <Section name="menu-header" padding="medium">
+    <div class="menu-header_component" data-reveal>
+      <p class="text-style-tagline">Menu</p>
+      <div class="spacer-small"></div>
+      <h1 class="heading-style-h1">Brewed slow, <em class="text-color-accent">served warm.</em></h1>
+      <div class="spacer-medium"></div>
+      <nav class="menu-header_jump" aria-label="Menu sections">
+        {menu.map((section) => <a href={`#${slug(section.title)}`} class="button is-secondary">{section.title}</a>)}
+      </nav>
+    </div>
+  </Section>
+
+  <Section name="menu" padding="small" container="medium">
+    <div class="menu_component">
+      {menu.map((section) => (
+        <section class="menu_group" id={slug(section.title)} data-reveal>
+          <div class="menu_group-header">
+            <h2 class="heading-style-h2">{section.title}</h2>
+            {section.note && <p class="text-style-muted text-size-small">{section.note}</p>}
+          </div>
+          <ul class="menu_list">
+            {section.items.map((item) => (
+              <li class="menu_item">
+                <div class="menu_item-row">
+                  <h3 class="heading-style-h4">{item.name}</h3>
+                  <span class="menu_dots" aria-hidden="true"></span>
+                  <p class="menu_price">₱{item.price}</p>
+                </div>
+                {item.description && <p class="text-style-muted text-size-small">{item.description}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <p class="text-size-small text-style-muted">Prices in Philippine pesos, VAT included. Placeholder menu for this demo.</p>
+    </div>
+  </Section>
+
+  <Newsletter />
+</Layout>
+
+<style>
+  .menu-header_jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .menu-header_jump .button {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .menu_component {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding-bottom: 4rem;
+  }
+  .menu_group {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 3rem;
+    scroll-margin-top: 6rem;
+  }
+  .menu_group-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .menu_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .menu_item-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .menu_dots {
+    flex: 1;
+    border-bottom: 2px dotted var(--border-color-primary);
+    transform: translateY(-0.3rem);
+  }
+  .menu_price {
+    font-weight: 600;
+    color: var(--color-caramel);
+  }
+  @media (max-width: 767px) {
+    .menu_group {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

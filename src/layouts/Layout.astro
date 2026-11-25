@@ -1,0 +1,201 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/#story', label: 'Our story' },
+  { href: '/menu', label: 'Menu' },
+  { href: '/#beans', label: 'Beans' },
+  { href: '/#visit', label: 'Visit' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600&display=swap"
+    />
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('js-reveal');
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="nav_component">
+        <div class="padding-global">
+          <div class="container-large">
+            <div class="nav_wrapper">
+              <a href="/" class="nav_logo" aria-label={`${site.name} home`}>
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M12 2l2.6 7.1L22 9.5l-5.8 4.7L18.2 22 12 17.8 5.8 22l2-7.8L2 9.5l7.4-.4z" fill="currentColor" />
+                </svg>
+                <span>{site.name}</span>
+              </a>
+              <nav class="nav_menu" aria-label="Main">
+                {links.map((l) => (
+                  <a href={l.href} class="nav_link" aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+                ))}
+              </nav>
+              <a href="/#visit" class="button is-small nav_button">Find us</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-wrapper">
+        <slot />
+      </main>
+
+      <footer class="footer_component background-color-alternate">
+        <div class="padding-global">
+          <div class="container-large">
+            <div class="padding-section-medium">
+              <div class="footer_top">
+                <div class="footer_brand">
+                  <p class="heading-style-h3">{site.name}</p>
+                  <p class="text-style-muted">{site.tagline}</p>
+                </div>
+                <div class="footer_col">
+                  <p class="heading-style-h4">Visit</p>
+                  {site.address.map((line) => <p class="text-style-muted">{line}</p>)}
+                </div>
+                <div class="footer_col">
+                  <p class="heading-style-h4">Contact</p>
+                  <a href={`mailto:${site.email}`} class="footer_link">{site.email}</a>
+                  <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="footer_link">{site.phone}</a>
+                  <a href={site.instagram} class="footer_link" target="_blank" rel="noopener">Instagram ↗</a>
+                </div>
+              </div>
+              <div class="footer_bottom text-size-small text-style-muted">
+                <p>© {new Date().getFullYear()} {site.name}. Placeholder brand for a demo site.</p>
+                <p>Roasted in small batches in Quezon City.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (document.documentElement.classList.contains('js-reveal')) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .nav_component {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgb(247 240 230 / 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color-primary);
+  }
+  .nav_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 4.5rem;
+  }
+  .nav_logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .nav_logo svg {
+    color: var(--color-caramel);
+  }
+  .nav_menu {
+    display: flex;
+    gap: 2rem;
+  }
+  .nav_link {
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: var(--text-color-secondary);
+    transition: color 0.2s;
+  }
+  .nav_link:hover,
+  .nav_link[aria-current='page'] {
+    color: var(--text-color-primary);
+  }
+  .nav_button {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .footer_top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color-primary);
+  }
+  .footer_brand,
+  .footer_col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer_link {
+    color: var(--text-color-secondary);
+    text-decoration: none;
+  }
+  .footer_link:hover {
+    color: var(--color-cream);
+  }
+  .footer_bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 2rem;
+  }
+  @media (max-width: 767px) {
+    .nav_menu {
+      display: none;
+    }
+    .footer_top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

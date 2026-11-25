@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Tala Coffee — Client-First base
+   page-wrapper > main-wrapper > section_[name] > padding-global
+   > container-[size] > padding-section-[size] > [name]_component
+   ========================================================================== */
+
+:root {
+  --color-cream: #f7f0e6;
+  --color-cream-dark: #efe3d1;
+  --color-latte: #d9b99b;
+  --color-caramel: #c8823e;
+  --color-gold: #e9b872;
+  --color-espresso: #2b1d16;
+  --color-roast: #4a3226;
+  --color-mocha: #7a5a48;
+  --color-white: #fffdf9;
+
+  --background-color-primary: var(--color-cream);
+  --background-color-secondary: var(--color-cream-dark);
+  --background-color-alternate: var(--color-espresso);
+  --text-color-primary: var(--color-espresso);
+  --text-color-secondary: var(--color-mocha);
+  --text-color-alternate: var(--color-cream);
+  --border-color-primary: rgb(43 29 22 / 0.14);
+
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --padding-global: 2.5rem;
+  --container-small: 48rem;
+  --container-medium: 64rem;
+  --container-large: 80rem;
+  --radius-small: 0.75rem;
+  --radius-medium: 1.25rem;
+  --radius-large: 2rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 991px) {
+  :root { --padding-global: 2rem; }
+}
+@media (max-width: 479px) {
+  :root { --padding-global: 1.25rem; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color-primary);
+  background-color: var(--background-color-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--color-caramel);
+  outline-offset: 3px;
+}
+
+/* ---------- Structure ---------- */
+
+.page-wrapper { overflow-x: clip; }
+
+.padding-global {
+  padding-left: var(--padding-global);
+  padding-right: var(--padding-global);
+}
+
+.container-small, .container-medium, .container-large {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container-small { max-width: var(--container-small); }
+.container-medium { max-width: var(--container-medium); }
+.container-large { max-width: var(--container-large); }
+
+.padding-section-small { padding-top: 3rem; padding-bottom: 3rem; }
+.padding-section-medium { padding-top: 5rem; padding-bottom: 5rem; }
+.padding-section-large { padding-top: 7.5rem; padding-bottom: 7.5rem; }
+
+@media (max-width: 991px) {
+  .padding-section-medium { padding-top: 4rem; padding-bottom: 4rem; }
+  .padding-section-large { padding-top: 5.5rem; padding-bottom: 5.5rem; }
+}
+@media (max-width: 479px) {
+  .padding-section-medium { padding-top: 3rem; padding-bottom: 3rem; }
+  .padding-section-large { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* ---------- Typography ---------- */
+
+.heading-style-h1,
+.heading-style-h2,
+.heading-style-h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+.heading-style-h1 { font-size: clamp(3rem, 7vw, 5.75rem); line-height: 1; }
+.heading-style-h2 { font-size: clamp(2.25rem, 4.5vw, 3.75rem); line-height: 1.05; }
+.heading-style-h3 { font-size: clamp(1.5rem, 2.4vw, 1.875rem); line-height: 1.2; }
+.heading-style-h4 { font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
+
+.text-size-large { font-size: 1.25rem; }
+.text-size-medium { font-size: 1.125rem; }
+.text-size-small { font-size: 0.875rem; }
+
+.text-style-muted { color: var(--text-color-secondary); }
+.text-style-italic { font-style: italic; }
+.text-style-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-caramel);
+}
+.text-style-tagline::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background-color: currentColor;
+}
+.text-align-center { text-align: center; }
+.text-color-accent { color: var(--color-caramel); }
+
+/* ---------- Spacing ---------- */
+
+.spacer-xsmall { padding-top: 0.5rem; }
+.spacer-small { padding-top: 1rem; }
+.spacer-medium { padding-top: 2rem; }
+.spacer-large { padding-top: 3rem; }
+
+/* ---------- Buttons ---------- */
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.75rem;
+  border: 1px solid var(--color-espresso);
+  border-radius: 999px;
+  background-color: var(--color-espresso);
+  color: var(--color-cream);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-out), background-color 0.3s, color 0.3s;
+}
+.button:hover { transform: translateY(-2px); background-color: var(--color-roast); }
+.button.is-secondary { background-color: transparent; color: var(--color-espresso); }
+.button.is-secondary:hover { background-color: var(--color-espresso); color: var(--color-cream); }
+.button.is-accent { border-color: var(--color-gold); background-color: var(--color-gold); color: var(--color-espresso); }
+.button.is-accent:hover { background-color: var(--color-latte); }
+
+/* ---------- Themes ---------- */
+
+.background-color-secondary { background-color: var(--background-color-secondary); }
+.background-color-alternate {
+  background-color: var(--background-color-alternate);
+  color: var(--text-color-alternate);
+  --text-color-secondary: var(--color-latte);
+  --border-color-primary: rgb(247 240 230 / 0.14);
+}
+.background-color-alternate .text-style-tagline { color: var(--color-gold); }
+
+/* ---------- Utilities ---------- */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Reveal on scroll — only hidden once JS confirms it can animate */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
